@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="admin">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="viewport" content"width=device-width, initial-scale=1.0">
+<title><%= content_for?(:title) ? yield(:title) : "Admin" %></title>
+<%= csrf_meta_tags %>
+<%= stylesheet_link_tag "application", :media => "all" %>
+</head>
+<body>
+
+  <div class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <h1><a href="/">Admin</a></h1>
+        </a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-left">
+          <li class="active">
+            <div panel>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="primary" ng-view>
+  </div>
+
+  <div id="f">
+    <div class="container">
+      <div class="row">
+        <p>Crafted with love by Gin</p>
+      </div>
+    </div>
+  </div>
+
+  <%= javascript_include_tag "application" %>
+</body>
+</html>
