@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'parse-ruby-client'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -22,5 +23,9 @@ module Admin
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    Parse.init  :application_id => "KRsv5fl3h1k1qvRvhEQyITCnvIZ7eq8uJDJp9JRC",
+                :api_key => "SrQRoGsr3Hse9VTXaFnOA6CsopZxx8UjIvlMIFNJ",
+                :quiet => true
   end
 end
