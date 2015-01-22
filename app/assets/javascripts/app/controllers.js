@@ -17,19 +17,39 @@ angular.module('admin.controllers', [])
 		{
 			$scope.question.questionType = $scope.selectedQuestionType.id;
 			$scope.question.questionWordings = $scope.questionWordings;
+			var answerDictionary = [];
 
 			if ($scope.question.questionType == 0)
 			{
-				$scope.question.answerOptions = $scope.answerOptions;
+				for (i = 0; i < $scope.answerOptions.length; i++)
+				{
+					var answer = $scope.answerOptions[i];
+
+					answerDictionary.push({
+						answer: answer,
+						numChosen: 0
+					});
+				}
 			}
 			else
 			{
-				$scope.question.answerOptions = ["Yes", "No"];
+				answerDictionary.push({
+					answer: "Yes",
+					numChosen: 0
+				});
+				answerDictionary.push({
+					answer: "No",
+					numChosen: 0
+				});
 			}
 
-			ParseService.createQuestion($scope.question).then(function() {
-				console.log($scope.question);
+			$scope.question.answerDictionary = JSON.stringify(answerDictionary);
+
+			ParseService.createQuestion($scope.question).then(function(response) {
+				console.log(response);
 			});
+
+			// $route.reload();
 		};
 	})
 .controller('HomeController',

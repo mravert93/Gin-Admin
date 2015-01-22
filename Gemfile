@@ -19,6 +19,9 @@ gem 'jquery-rails'
 gem 'angularjs-rails', "=1.2.6"
 gem 'bootstrap-sass-rails', "=3.0.3.0"
 gem 'parse-ruby-client'
+gem 'responders', '~>2.0'
+gem 'angular_rails_csrf'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.

@@ -7,8 +7,6 @@ Rails.application.routes.draw do
   # root 'welcome#index'
   root 'admin#index'
 
-  match '*path' => 'admin#index', :via => [:get, :post]
-
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
@@ -17,6 +15,8 @@ Rails.application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
+
+  resources :create_question, only: [:create]
 
   # Example resource route with options:
   #   resources :products do
@@ -57,4 +57,8 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+
+  match '*path' => 'admin#index', :via => [:get, :post]
+
 end

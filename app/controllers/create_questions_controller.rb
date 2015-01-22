@@ -1,2 +1,0 @@
-class CreateQuestionsController < ApplicationController
-end
