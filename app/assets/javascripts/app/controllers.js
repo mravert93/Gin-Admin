@@ -21,29 +21,14 @@ angular.module('admin.controllers', [])
 
 			if ($scope.question.questionType == 0)
 			{
-				for (i = 0; i < $scope.answerOptions.length; i++)
-				{
-					var answer = $scope.answerOptions[i];
-
-					answerDictionary.push({
-						answer: answer,
-						numChosen: 0
-					});
-				}
+				answerDictionary = $scope.answerOptions
 			}
 			else
 			{
-				answerDictionary.push({
-					answer: "Yes",
-					numChosen: 0
-				});
-				answerDictionary.push({
-					answer: "No",
-					numChosen: 0
-				});
+				answerDictionary = ["Yes", "No"];
 			}
 
-			$scope.question.answerDictionary = JSON.stringify(answerDictionary);
+			$scope.question.answerDictionary = answerDictionary;
 
 			ParseService.createQuestion($scope.question).then(function(response) {
 				console.log(response);

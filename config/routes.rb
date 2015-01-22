@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   #   resources :products
 
   resources :create_question, only: [:create]
+	resources :create_question_answers, only: [:create]
 
   # Example resource route with options:
   #   resources :products do
