@@ -24,8 +24,6 @@ module Admin
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
-    Parse.init  :application_id => "KRsv5fl3h1k1qvRvhEQyITCnvIZ7eq8uJDJp9JRC",
-                :api_key => "SrQRoGsr3Hse9VTXaFnOA6CsopZxx8UjIvlMIFNJ",
-                :quiet => true
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end

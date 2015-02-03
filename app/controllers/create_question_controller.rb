@@ -1,56 +1,33 @@
 class CreateQuestionController < ApplicationController
 
-	require 'uri'
-	require 'net/http'
-	require 'net/https'
+	require 'parse_question'
+	require 'parse_manager'
+	require 'parse_answer'
 
 
 	def create
-
 		createObject = params[:create_question]
 		answersArray = []
-		questionObject = {}
+
+		question = ParseQuestion.questionFromJson(createObject)
 
 		createObject.each do |key, value|
 			if key == "answerDictionary"
 				answersArray = value
-			else
-				questionObject[key] = value
 			end
 		end
-		
-		uri = URI.parse("https://api.parse.com/1/classes/Question")
-		answerUri = URI.parse("https://api.parse.com/1/classes/QuestionAnswers")
 
-		https = Net::HTTP.new(uri.host, uri.port)
-		https.use_ssl = true
-		answerHttps = Net::HTTP.new(answerUri.host, answerUri.port);
-		answerHttps.use_ssl = true
+		response = ParseManager.createQuestion(question)
 
-		header = {
-			'X-Parse-Application-Id' => 'KRsv5fl3h1k1qvRvhEQyITCnvIZ7eq8uJDJp9JRC',
-	 		'X-Parse-REST-API-Key' => 'SrQRoGsr3Hse9VTXaFnOA6CsopZxx8UjIvlMIFNJ',
-	 		'Content-Type' => 'application/json'
-		}
+		objectId = response["objectId"]
 
-		request = Net::HTTP::Post.new(uri.path, header)
-		request.body = questionObject.to_json
-
-		response = https.request(request)
-
-		responseData = JSON.parse(response.body)
-		objectId = responseData["objectId"]
-
+		answerIndex = 0
 		answersArray.each do |answer|
-			request = Net::HTTP::Post.new(answerUri.path, header)
-			data = {
-				'answer' => answer,
-				'numAnswers' => 0,
-				'questionId' => objectId
-			}
-			request.body = data.to_json
+			parseAnswer = ParseAnswer.new(answer, objectId, answerIndex)
 
-			response = answerHttps.request(request)
+			answerIndex += 1
+
+			response = ParseManager.createQuestionAnswer(parseAnswer)
 		end
 
 		render json: response

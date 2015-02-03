@@ -24,7 +24,17 @@
 				</div>
 
 				<div class="form-group">
-					<label for="question.questionWordings">Wording for Question</label>
+					<label for="question.question">User Facing Question Wording</label>
+					<input type="text"
+						   class="form-control"
+					   		placeholder="How much do you weigh?"
+					   		name="question.question"
+					   		ng-model="question.question"
+					   		required />
+				</div>
+
+				<div class="form-group">
+					<label for="question.questionWordings">Search Wordings for Question</label>
 					(Wording1, Wording2, Wording3, ...)
 					<textarea 	ng-model="questionWordings" 
 								ng-list=", " 

@@ -37,4 +37,22 @@ angular.module('admin.services', [])
 
 			return d.promise;
 		}
+
+		this.loginAdmin = function(username, password) {
+			var d = $q.defer();
+
+			$http({
+				method: 'POST',
+				url: 'admin_login.json',
+				data: {'username' : username, 'password' : password}
+			})
+			.then(function(response) {
+				d.resolve(response);
+			}),
+			function(error) {
+				d.reject(error);
+			}
+
+			return d.promise;
+		}
 	});

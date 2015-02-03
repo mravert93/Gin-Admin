@@ -1,6 +1,6 @@
 angular.module('admin.controllers', [])
 .controller('CreateQuestionController',
-	function($scope, ParseService) {
+	function($scope, ParseService, $route) {
 
 		$scope.question = {}
 		$scope.questionWordings = [];
@@ -32,10 +32,33 @@ angular.module('admin.controllers', [])
 
 			ParseService.createQuestion($scope.question).then(function(response) {
 				console.log(response);
+				$route.reload();
 			});
 
-			// $route.reload();
 		};
+	})
+.controller('LoginController',
+	function($scope, ParseService, $route, $location, $rootScope, $cookieStore) {
+		if ($cookieStore.get("sessionToken") != null)
+		{
+			$cookieStore.remove("sessionToken");
+		}
+
+		$scope.login = function()
+		{
+			ParseService.loginAdmin($scope.username, $scope.password).then(function(response) {
+				if (response.data.sessionToken)
+				{
+					$rootScope.loggedUser = response.data.objectId;
+					$cookieStore.put("sessionToken", response.data.sessionToken);
+					$location.path("/");
+				}
+				else
+				{
+					console.log(response.data.error);
+				}
+			})
+		}
 	})
 .controller('HomeController',
 	function($scope) {
