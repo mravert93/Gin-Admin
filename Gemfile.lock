@@ -87,6 +87,9 @@ GEM
     minitest (5.5.1)
     multi_json (1.10.1)
     multipart-post (2.0.0)
+    ngannotate-rails (0.14.1)
+      execjs
+      rails (>= 3.1)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
     parse-ruby-client (0.3.0)
@@ -170,6 +173,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   jbuilder (~> 2.0)
   jquery-rails
+  ngannotate-rails
   parse-ruby-client
   rails (= 4.2.0)
   responders (~> 2.0)
