@@ -8,12 +8,16 @@ class ParseManager
 	private_class_method :new
 
 	## Parse Api keys
- 	@PARSE_APP_ID = 'KRsv5fl3h1k1qvRvhEQyITCnvIZ7eq8uJDJp9JRC'
-	@PARSE_REST_KEY = 'SrQRoGsr3Hse9VTXaFnOA6CsopZxx8UjIvlMIFNJ'
+  ##@PARSE_APP_ID = 'KRsv5fl3h1k1qvRvhEQyITCnvIZ7eq8uJDJp9JRC'
+	##@PARSE_REST_KEY = 'SrQRoGsr3Hse9VTXaFnOA6CsopZxx8UjIvlMIFNJ'
+	## QA Keys
+	@PARSE_APP_ID = 'DoZASTALoss5wZIOd8SAJQSSjki4BBrQ2QyHClVr'
+	@PARSE_REST_KEY = '7hWoKQa689ObInDuZq0x0S3J1RyOoXvV6ZsWoiVm'
 
 	## Urls for Parse
 	@QUESTION_URL = "https://api.parse.com/1/classes/Question"
 	@ANSWER_URL = "https://api.parse.com/1/classes/QuestionAnswers"
+	@USER_ANSWER_URL = "https://api.parse.com/1/classes/UserAnswer"
 	@ADMIN_LOGIN_URL = "https://api.parse.com/1/login?"
 
 	## Singleton constructor
@@ -74,14 +78,35 @@ class ParseManager
 
 		header = {
 			'X-Parse-Application-Id' => @PARSE_APP_ID,
-	 		'X-Parse-REST-API-Key' => @PARSE_REST_KEY,
-	 		'Content-Type' => 'application/json'
+			'X-Parse-REST-API-Key' => @PARSE_REST_KEY,
+			'Content-Type' => 'application/json'
 		}
 
 		request = Net::HTTP::Post.new(uri.path, header)
 		request.body = answer.to_json
 
 		response = https.request(request)
+
+		responseData = JSON.parse(response.body)
+	end
+
+	## Gets all questions
+	def self.getAllQuestions()
+		uri = URI.parse(@QUESTION_URL)
+
+		https = Net::HTTP.new(uri.host, uri.port)
+		https.use_ssl = true
+
+		header = {
+			'X-Parse-Application-Id' => @PARSE_APP_ID,
+			'X-Parse-REST-API-Key' => @PARSE_REST_KEY,
+			'Content-Type' => 'application/json'
+		}
+
+		request = Net::HTTP::Post.new(uri.path, header)
+
+		response = https.request(request)
+		puts response
 
 		responseData = JSON.parse(response.body)
 	end
