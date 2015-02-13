@@ -137,6 +137,9 @@ class ParseManager
 
 	## Create an answer for an unknown user
 	def self.createUserAnswer(answer, answerId, questionId)
+		## increment the number of answers on the answer object
+		ParseManager.incrementAnswerCount(answerId);
+
 		data = {:answer => answer, :answerId => answerId, :questionId => questionId}
 
 		uri = URI.parse(@USER_ANSWER_URL)
@@ -152,6 +155,33 @@ class ParseManager
 
 		request = Net::HTTP::Post.new(uri.path, header)
 		request.body = data.to_json
+
+		response = https.request(request)
+
+		responseData = JSON.parse(response.body)
+	end
+
+	## Increments the counter on the answer table
+	def self.incrementAnswerCount(answerId)
+		incrementHash = {"__op" => "Increment", "amount" => 1}
+		data = {:numAnswers => incrementHash}
+
+		uri = URI.parse(@ANSWER_URL)
+
+		https = Net::HTTP.new(uri.host, uri.port)
+		https.use_ssl = true
+
+		header = {
+			'X-Parse-Application-Id' => @PARSE_APP_ID,
+	 		'X-Parse-REST-API-Key' => @PARSE_REST_KEY,
+	 		'Content-Type' => 'application/json'
+		}
+
+		request = Net::HTTP::Put.new(uri.path << "/" << answerId, header)
+		request.body = data.to_json
+
+		puts request.body
+		puts uri.path
 
 		response = https.request(request)
 
