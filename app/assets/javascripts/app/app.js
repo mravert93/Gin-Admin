@@ -18,6 +18,11 @@ angular.module('admin', [
 		controller: 'CreateQuestionController',
 		templateUrl: '/templates/create_question.html'
 	})
+	.when('/createUserAnswer',
+	{
+		controller: 'CreateUserAnswerController',
+		templateUrl: '/templates/create_user_answer.html'
+	})
 	.when('/',
 	{
 		controller: 'HomeController',

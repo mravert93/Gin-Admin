@@ -103,10 +103,57 @@ class ParseManager
 			'Content-Type' => 'application/json'
 		}
 
-		request = Net::HTTP::Post.new(uri.path, header)
+		request = Net::HTTP::Get.new(uri.path, header)
 
 		response = https.request(request)
-		puts response
+
+		responseData = JSON.parse(response.body)
+	end
+
+	## Get all of the answers for the given question
+	def self.getAnswersForQuestion(questionId)
+		queryParams = {:questionId => questionId}
+		queryHash = {:where => queryParams.to_json}
+
+		uri = URI(@ANSWER_URL)
+		uri.query = URI.encode_www_form(queryHash)
+		puts uri.query
+
+		https = Net::HTTP.new(uri.host, uri.port)
+		https.use_ssl = true
+
+		header = {
+			'X-Parse-Application-Id' => @PARSE_APP_ID,
+	 		'X-Parse-REST-API-Key' => @PARSE_REST_KEY
+		}
+
+		request = Net::HTTP::Get.new(uri.path << "?" << uri.query, header)
+		puts uri.path
+
+		response = https.request(request)
+
+		responseData = JSON.parse(response.body)
+	end
+
+	## Create an answer for an unknown user
+	def self.createUserAnswer(answer, answerId, questionId)
+		data = {:answer => answer, :answerId => answerId, :questionId => questionId}
+
+		uri = URI.parse(@USER_ANSWER_URL)
+
+		https = Net::HTTP.new(uri.host, uri.port)
+		https.use_ssl = true
+
+		header = {
+			'X-Parse-Application-Id' => @PARSE_APP_ID,
+	 		'X-Parse-REST-API-Key' => @PARSE_REST_KEY,
+	 		'Content-Type' => 'application/json'
+		}
+
+		request = Net::HTTP::Post.new(uri.path, header)
+		request.body = data.to_json
+
+		response = https.request(request)
 
 		responseData = JSON.parse(response.body)
 	end

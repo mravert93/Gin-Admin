@@ -1,0 +1,34 @@
+<div class="session jumbotron">
+	<div class="container">
+		
+		<div class="col-md-8">
+			<h2>Create User Answer For Question</h2>
+			<form
+				name="create_user_answer_form"
+				role="form"
+				ng-submit="submitAnswer()">
+				
+				<div class="form-group">
+					<label for="selectedQuestion">Question</label>
+					<select ng-model="selectedQuestion" ng-options="type as type.question for type in questions"
+							ng-change="updateAnswers()"></select>
+				</div>
+
+				<div class="form-group">
+					<label for="selectedAnswer">Answer</label>
+					<select ng-model="selectedAnswer" ng-options="type as type.answer for type in answers"></select>
+				</div>
+
+				<div class="form-group">
+					<button type="submit"
+							class="btn btn-primary">Create</button>
+				</div>
+
+				<div ng-if="create.errors" class="alert alert-danger">
+					<h2>{{create.errors}}</h2>
+				</div>
+				
+			</form>
+		<div>
+	</div>
+</div>

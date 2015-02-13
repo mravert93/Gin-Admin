@@ -32,4 +32,12 @@ class CreateQuestionController < ApplicationController
 
 		render json: response
 	end
+
+	## Gets all questions
+	def index
+		questions = ParseManager.getAllQuestions();
+
+		render json:questions
+	end
+
 end

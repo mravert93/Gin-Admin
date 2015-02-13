@@ -31,7 +31,7 @@ angular.module('admin.controllers', [])
 			$scope.question.answerDictionary = answerDictionary;
 
 			ParseService.createQuestion($scope.question).then(function(response) {
-				console.log(response);
+				console.log(response.data);
 				$route.reload();
 			});
 
@@ -57,6 +57,43 @@ angular.module('admin.controllers', [])
 				{
 					console.log(response.data.error);
 				}
+			})
+		}
+	})
+.controller('CreateUserAnswerController',
+	function($scope, ParseService, $route) {
+
+		$scope.questions = []; 
+		$scope.selectedQuestion = {};
+		$scope.selectedAnswer = {};
+		$scope.answers = [];
+
+		ParseService.getAllQuestions().then(function(response) {
+			if (response.data.results)
+			{
+				$scope.questions = response.data.results;
+			}
+			else
+			{
+				console.log(response.data)
+			}		
+		});
+
+		$scope.updateAnswers = function() {
+			console.log($scope.selectedQuestion.objectId);
+			ParseService.getAnswersForQuestion($scope.selectedQuestion.objectId).then(function(response) {
+				$scope.answers = response.data.results;
+			});
+		}
+
+		$scope.submitAnswer = function() {
+			answer = $scope.selectedAnswer.answer;
+			answerId = $scope.selectedAnswer.objectId;
+			questionId = $scope.selectedQuestion.objectId;
+
+			ParseService.createUserAnswer(answer, answerId, questionId).then(function(response) {
+				console.log(response.data);
+				$route.reload();
 			})
 		}
 	})

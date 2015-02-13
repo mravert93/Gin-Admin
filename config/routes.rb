@@ -16,8 +16,9 @@ Rails.application.routes.draw do
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  resources :create_question, only: [:create]
-	resources :create_question_answers, only: [:create]
+  resources :create_question, only: [:create, :index]
+	resources :create_question_answers, only: [:create, :index]
+	resources :create_user_answers, only: [:create]
 	resources :admin_login, only: [:create]
 
   # Example resource route with options:
