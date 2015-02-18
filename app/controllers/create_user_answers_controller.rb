@@ -5,11 +5,15 @@ class CreateUserAnswersController < ApplicationController
 
 	## gets all answers for the given question id
 	def create 
-		questionId = params[:questionId];
-		answerId = params[:answerId];
-		answer = params[:answer];
+		questionId = params[:questionId]
+		answerId = params[:answerId]
+		answer = params[:answer]
+		numAnswers = params[:numAnswers].to_i
 
-		success = ParseManager.createUserAnswer(answer, answerId, questionId);
+		begin
+			success = ParseManager.createUserAnswer(answer, answerId, questionId)
+			numAnswers -= 1
+		end until numAnswers == 0
 
 		render json:success
 	end

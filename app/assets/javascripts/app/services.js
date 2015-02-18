@@ -91,7 +91,7 @@ angular.module('admin.services', [])
 			return d.promise;
 		}
 
-		this.createUserAnswer = function(answer, answerId, questionId) {
+		this.createUserAnswer = function(answer, answerId, questionId, numAnswers) {
 			var d = $q.defer();
 
 			$http({
@@ -100,7 +100,8 @@ angular.module('admin.services', [])
 				data: {
 					'questionId' : questionId, 
 					'answer' : answer, 
-					'answerId' : answerId
+					'answerId' : answerId,
+					'numAnswers' : numAnswers
 				}
 			})
 			.then(function(response) {

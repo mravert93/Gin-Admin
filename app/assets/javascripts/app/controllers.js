@@ -67,6 +67,7 @@ angular.module('admin.controllers', [])
 		$scope.selectedQuestion = {};
 		$scope.selectedAnswer = {};
 		$scope.answers = [];
+		$scope.numAnswers;
 
 		ParseService.getAllQuestions().then(function(response) {
 			if (response.data.results)
@@ -90,8 +91,9 @@ angular.module('admin.controllers', [])
 			answer = $scope.selectedAnswer.answer;
 			answerId = $scope.selectedAnswer.objectId;
 			questionId = $scope.selectedQuestion.objectId;
+			numAnswers = $scope.numAnswers;
 
-			ParseService.createUserAnswer(answer, answerId, questionId).then(function(response) {
+			ParseService.createUserAnswer(answer, answerId, questionId, numAnswers).then(function(response) {
 				console.log(response.data);
 				$route.reload();
 			})
