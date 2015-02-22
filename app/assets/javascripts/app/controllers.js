@@ -5,6 +5,8 @@ angular.module('admin.controllers', [])
 		$scope.question = {}
 		$scope.questionWordings = [];
 		$scope.answerOptions = [];
+		$scope.yesAnswer;
+		$scope.noAnswer;
 
 		// Question type array
 		$scope.questionTypes = [
@@ -18,7 +20,8 @@ angular.module('admin.controllers', [])
 			$scope.question.questionType = $scope.selectedQuestionType.id;
 			$scope.question.questionWordings = $scope.questionWordings;
 			var answerDictionary = [];
-
+			var alternateAnswers = [];
+			
 			if ($scope.question.questionType == 0)
 			{
 				answerDictionary = $scope.answerOptions
@@ -26,9 +29,14 @@ angular.module('admin.controllers', [])
 			else
 			{
 				answerDictionary = ["Yes", "No"];
+				console.log($scope.yesAnswer);
+				console.log($scope.noAnswer);
+				alternateAnswers.push($scope.yesAnswer);
+				alternateAnswers.push($scope.noAnswer);
 			}
 
 			$scope.question.answerDictionary = answerDictionary;
+			$scope.question.alternateAnswers = alternateAnswers;
 
 			ParseService.createQuestion($scope.question).then(function(response) {
 				console.log(response.data);

@@ -8,12 +8,15 @@ class CreateQuestionController < ApplicationController
 	def create
 		createObject = params[:create_question]
 		answersArray = []
+		alternateAnswersArray = []
 
 		question = ParseQuestion.questionFromJson(createObject)
 
 		createObject.each do |key, value|
 			if key == "answerDictionary"
 				answersArray = value
+			elsif key == "alternateAnswers"
+				alternateAnswersArray = value
 			end
 		end
 
@@ -23,7 +26,12 @@ class CreateQuestionController < ApplicationController
 
 		answerIndex = 0
 		answersArray.each do |answer|
-			parseAnswer = ParseAnswer.new(answer, objectId, answerIndex)
+			altAnswer = alternateAnswersArray[answerIndex]
+			if (altAnswer)
+				parseAnswer = ParseAnswer.new(answer, objectId, answerIndex, altAnswer)
+			elsif
+				parseAnswer = ParseAnswer.new(answer, objectId, answerIndex, '')
+			end
 
 			answerIndex += 1
 

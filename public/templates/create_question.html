@@ -53,6 +53,26 @@
 								placeholder="Below 100lbs, Between 100 and 150lbs, ..."></textarea>
 				</div>
 
+				<div ng-show="selectedQuestionType.id == 1" class="form-group">
+					<label for="yesAnswer">Alternate answer wording for "Yes"</label>
+					<input type="text"
+						   class="form-control"
+					   		placeholder="Does"
+					   		name="yesAnswer"
+					   		ng-model="yesAnswer"
+					   		required />
+				</div>
+
+				<div ng-show="selectedQuestionType.id == 1" class="form-group">
+					<label for="noAnswer">Alternate answer wording for "No"</label>
+					<input type="text"
+						   class="form-control"
+					   		placeholder="Does not"
+					   		name="noAnswer"
+					   		ng-model="noAnswer"
+					   		required />
+				</div>
+
 				<div class="form-group">
 					<button type="submit"
 							class="btn btn-primary">Create</button>
