@@ -11,7 +11,9 @@ angular.module('admin.controllers', [])
 		// Question type array
 		$scope.questionTypes = [
 			{ id : 0, title : 'Multiple Choice - 0'},
-			{ id : 1, title : 'Yes / No - 1'}
+			{ id : 1, title : 'Yes / No - 1'},
+			{ id : 2, title : 'Monetary - 2'},
+			{ id : 3, title : 'Date / Time - 3'}
 		];
 		$scope.selectedQuestionType = $scope.questionTypes[0];
 
@@ -22,17 +24,23 @@ angular.module('admin.controllers', [])
 			var answerDictionary = [];
 			var alternateAnswers = [];
 			
-			if ($scope.question.questionType == 0)
+			switch ($scope.question.questionType)
 			{
-				answerDictionary = $scope.answerOptions
-			}
-			else
-			{
-				answerDictionary = ["Yes", "No"];
-				console.log($scope.yesAnswer);
-				console.log($scope.noAnswer);
-				alternateAnswers.push($scope.yesAnswer);
-				alternateAnswers.push($scope.noAnswer);
+				case 0:
+					answerDictionary = $scope.answerOptions
+					break;
+				case 1:
+					answerDictionary = ["Yes", "No"];
+					alternateAnswers.push($scope.yesAnswer);
+					alternateAnswers.push($scope.noAnswer);
+					break;
+				case 2:
+				case 3:
+					// Set the answer to use the number pad
+					$scope.question.answerType = 1;
+					break;
+				default:
+					break;
 			}
 
 			$scope.question.answerDictionary = answerDictionary;
@@ -76,6 +84,8 @@ angular.module('admin.controllers', [])
 		$scope.selectedAnswer = {};
 		$scope.answers = [];
 		$scope.numAnswers;
+		$scope.createdAnswer;
+		$scope.errors;
 
 		ParseService.getAllQuestions().then(function(response) {
 			if (response.data.results)
@@ -91,7 +101,7 @@ angular.module('admin.controllers', [])
 		$scope.updateAnswers = function() {
 			console.log($scope.selectedQuestion.objectId);
 			ParseService.getAnswersForQuestion($scope.selectedQuestion.objectId).then(function(response) {
-				$scope.answers = response.data.results;
+				$scope.answers = response.data;
 			});
 		}
 
@@ -100,11 +110,26 @@ angular.module('admin.controllers', [])
 			answerId = $scope.selectedAnswer.objectId;
 			questionId = $scope.selectedQuestion.objectId;
 			numAnswers = $scope.numAnswers;
+			createdAnswer = $scope.createdAnswer;
 
-			ParseService.createUserAnswer(answer, answerId, questionId, numAnswers).then(function(response) {
-				console.log(response.data);
-				$route.reload();
-			})
+			if (!(createdAnswer == null) && !(answerId == null))
+			{
+				$scope.errors = 'Cannot choose an answer and create a new one!';
+			}
+			else if (answerId != null)
+			{
+				ParseService.createUserAnswer(answer, answerId, questionId, numAnswers).then(function(response) {
+					console.log(response.data);
+					$route.reload();
+				})
+			}
+			else if (createdAnswer != null)
+			{
+				ParseService.createAnswerForQuestion(createdAnswer, questionId, $scope.answers.length, numAnswers).then(function(response) {
+					console.log(response.data);
+					$route.reload();
+				})
+			}
 		}
 	})
 .controller('HomeController',

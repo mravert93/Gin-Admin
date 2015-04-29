@@ -1,5 +1,5 @@
 class ParseAnswer
-	attr_reader :answer, :numAnswers, :questionId, :index
+	attr_accessor :answer, :numAnswers, :questionId, :index
 
 	## Define the initializer for a parse question
 	def initialize(answer, questionId, index, alternateAnswer)

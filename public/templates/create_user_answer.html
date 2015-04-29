@@ -3,6 +3,7 @@
 		
 		<div class="col-md-8">
 			<h2>Create User Answer For Question</h2>
+			<label ng-model="errors" name="errors">{{errors}}</label>
 			<form
 				name="create_user_answer_form"
 				role="form"
@@ -17,6 +18,9 @@
 				<div class="form-group">
 					<label for="selectedAnswer">Answer</label>
 					<select ng-model="selectedAnswer" ng-options="type as type.answer for type in answers"></select>
+					</br>
+					<label for="createNewAnswer">Create New Answer</label>
+					<input type="text" class="form-control" placeholder="50000" name="createdAnswer" ng-model="createdAnswer" />
 				</div>
 
 				<div class="form-group">

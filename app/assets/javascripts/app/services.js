@@ -20,13 +20,18 @@ angular.module('admin.services', [])
 			return d.promise;
 		}
 
-		this.createAnswersForQuestion = function(answer) {
+		this.createAnswerForQuestion = function(answer, questionId, index, numAnswers) {
 			var d = $q.defer();
 
 			$http({
 				method: 'POST',
 				url: 'create_question_answers.json',
-				data: answer
+				data: {
+					'answer' : answer,
+					'questionId' : questionId,
+					'answerIndex' : index,
+					'numAnswers' : numAnswers
+				}
 			})
 			.then(function(response) {
 				d.resolve(response);
@@ -77,9 +82,9 @@ angular.module('admin.services', [])
 			var d = $q.defer();
 
 			$http({
-				method: 'POST',
+				method: 'GET',
 				url: 'create_question_answers.json',
-				data: {'questionId' : questionId}
+				params: {'questionId' : questionId}
 			})
 			.then(function(response) {
 				d.resolve(response);

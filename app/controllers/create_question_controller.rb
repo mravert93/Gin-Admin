@@ -13,9 +13,9 @@ class CreateQuestionController < ApplicationController
 		question = ParseQuestion.questionFromJson(createObject)
 
 		createObject.each do |key, value|
-			if key == "answerDictionary"
+			if key == "answerDictionary" and value
 				answersArray = value
-			elsif key == "alternateAnswers"
+			elsif key == "alternateAnswers" and value
 				alternateAnswersArray = value
 			end
 		end

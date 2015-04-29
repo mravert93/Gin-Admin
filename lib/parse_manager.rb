@@ -8,11 +8,8 @@ class ParseManager
 	private_class_method :new
 
 	## Parse Api keys
-  	@PARSE_APP_ID = 'KRsv5fl3h1k1qvRvhEQyITCnvIZ7eq8uJDJp9JRC'
-	@PARSE_REST_KEY = 'SrQRoGsr3Hse9VTXaFnOA6CsopZxx8UjIvlMIFNJ'
-	## QA Keys
-	# @PARSE_APP_ID = 'DoZASTALoss5wZIOd8SAJQSSjki4BBrQ2QyHClVr'
-	# @PARSE_REST_KEY = '7hWoKQa689ObInDuZq0x0S3J1RyOoXvV6ZsWoiVm'
+  	@PARSE_APP_ID = ENV['PARSE_APP_ID']
+	@PARSE_REST_KEY = ENV['PARSE_REST_KEY']
 
 	## Urls for Parse
 	@QUESTION_URL = "https://api.parse.com/1/classes/Question"
