@@ -74,6 +74,17 @@
 					   		ng-model="noAnswer" />
 				</div>
 
+				<!-- Give rounding option for numeric questions -->
+				<div ng-show="selectedQuestionType.id >= 2" class="form-group">
+					<label for="rounding">Rounding for Numeric Answers</label>
+					(Group the answers to the nearest given number, ex. Income may round to nearest $5000)
+					<input type="text"
+						   class="form-control"
+					   		placeholder="5000"
+					   		name="rounding"
+					   		ng-model="rounding" />
+				</div>
+
 				<div class="form-group">
 					<button type="submit"
 							class="btn btn-primary">Create</button>

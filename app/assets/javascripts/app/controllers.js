@@ -7,13 +7,15 @@ angular.module('admin.controllers', [])
 		$scope.answerOptions = [];
 		$scope.yesAnswer;
 		$scope.noAnswer;
+		$scope.rounding;
 
 		// Question type array
 		$scope.questionTypes = [
 			{ id : 0, title : 'Multiple Choice - 0'},
 			{ id : 1, title : 'Yes / No - 1'},
 			{ id : 2, title : 'Monetary - 2'},
-			{ id : 3, title : 'Date / Time - 3'}
+			{ id : 3, title : 'Date / Time - 3'},
+			{ id : 4, title : 'Generic Numeric (No Units) - 4'}
 		];
 		$scope.selectedQuestionType = $scope.questionTypes[0];
 
@@ -36,8 +38,10 @@ angular.module('admin.controllers', [])
 					break;
 				case 2:
 				case 3:
+				case 4:
 					// Set the answer to use the number pad
 					$scope.question.answerType = 1;
+					$scope.question.rounding = $scope.rounding;
 					break;
 				default:
 					break;
@@ -45,6 +49,8 @@ angular.module('admin.controllers', [])
 
 			$scope.question.answerDictionary = answerDictionary;
 			$scope.question.alternateAnswers = alternateAnswers;
+
+			console.log($scope.question);
 
 			ParseService.createQuestion($scope.question).then(function(response) {
 				console.log(response.data);

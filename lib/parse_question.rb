@@ -1,5 +1,5 @@
 class ParseQuestion
-	attr_reader :answer, :questionType, :questionWordings
+	attr_accessor :answer, :questionType, :questionWordings, :rounding
 
 	## Define the initializer for a parse question
 	def initialize(answer, question, questionType, questionWordings, answerType)
@@ -18,7 +18,14 @@ class ParseQuestion
 		jsonQuestion = json[:question]
 		jsonAnswerType = json[:answerType]
 
-		ParseQuestion.new(jsonAnswer, jsonQuestion, jsonQuestionType, jsonQuestionWordings, jsonAnswerType)
+		new_question = ParseQuestion.new(jsonAnswer, jsonQuestion, jsonQuestionType, jsonQuestionWordings, jsonAnswerType)
+
+		jsonRounding = json[:rounding]
+		if (jsonRounding)
+			new_question.rounding = jsonRounding.to_i;
+		end
+
+		new_question
 	end
 
 end
