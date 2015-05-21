@@ -1,5 +1,5 @@
 class ParseAnswer
-	attr_accessor :answer, :numAnswers, :questionId, :index
+	attr_accessor :answer, :numAnswers, :questionId, :index, :type
 
 	## Define the initializer for a parse question
 	def initialize(answer, questionId, index, alternateAnswer)
@@ -8,6 +8,7 @@ class ParseAnswer
 		@index = index
 		@numAnswers = 0
 		@alternateAnswer = alternateAnswer
+		@type = 0
 	end
 
 end

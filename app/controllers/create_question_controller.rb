@@ -33,6 +33,13 @@ class CreateQuestionController < ApplicationController
 				parseAnswer = ParseAnswer.new(answer, objectId, answerIndex, '')
 			end
 
+			# Set the answer type if they are in the unknown category
+			if answer.include? "Don't Know" and question.questionType > 1
+				parseAnswer.type = 1
+			elsif answer.include? "Not Applicable" and question.questionType > 1
+				parseAnswer.type = 2
+			end
+
 			answerIndex += 1
 
 			response = ParseManager.createQuestionAnswer(parseAnswer)

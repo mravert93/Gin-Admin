@@ -55,22 +55,38 @@
 				</div>
 
 				<!-- Alternate yes option only if the question is a yes or no question -->
-				<div ng-show="selectedQuestionType.id == 1" class="form-group">
-					<label for="yesAnswer">Alternate answer wording for "Yes"</label>
+				<div ng-show="selectedQuestionType.id != 0" class="form-group">
+					<label for="yesAnswer" ng-show="selectedQuestionType.id == 1">Alternate answer wording for "Yes"</label>
+					<label for="yesAnswer" ng-show="selectedQuestionType.id > 1">Alternate answer wording for "Don't Know"</label>
 					<input type="text"
 						   class="form-control"
 					   		placeholder="Does"
 					   		name="yesAnswer"
+					   		ng-show="selectedQuestionType.id == 1"
+					   		ng-model="yesAnswer" />
+					<input type="text"
+					   		class="form-control"
+					   		placeholder="Also doesn't"
+					   		name="yesAnswer"
+					   		ng-show="selectedQuestionType.id > 1"
 					   		ng-model="yesAnswer" />
 				</div>
 
 				<!-- Alternate no option only if the question is a yes or no question -->
-				<div ng-show="selectedQuestionType.id == 1" class="form-group">
-					<label for="noAnswer">Alternate answer wording for "No"</label>
+				<div ng-show="selectedQuestionType.id != 0" class="form-group">
+					<label for="noAnswer" ng-show="selectedQuestionType.id == 1">Alternate answer wording for "No"</label>
+					<label for="noAnswer" ng-show="selectedQuestionType.id > 1">Alternate answer wording for "Not Applicable"</label>
 					<input type="text"
 						   class="form-control"
 					   		placeholder="Does not"
 					   		name="noAnswer"
+					   		ng-show="selectedQuestionType.id == 1"
+					   		ng-model="noAnswer" />
+					<input type="text"
+						   class="form-control"
+					   		placeholder="N/A"
+					   		name="noAnswer"
+					   		ng-show="selectedQuestionType.id > 1"
 					   		ng-model="noAnswer" />
 				</div>
 

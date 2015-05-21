@@ -42,6 +42,9 @@ angular.module('admin.controllers', [])
 					// Set the answer to use the number pad
 					$scope.question.answerType = 1;
 					$scope.question.rounding = $scope.rounding;
+					answerDictionary = ["Don't Know", "Not Applicable"];
+					alternateAnswers.push($scope.yesAnswer);
+					alternateAnswers.push($scope.noAnswer);
 					break;
 				default:
 					break;
